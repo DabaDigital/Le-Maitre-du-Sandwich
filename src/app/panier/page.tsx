@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function CartPage() {
   return (
-    <div className="bg-paper px-5 pb-28 pt-32 text-ink lg:px-[5vw] lg:pb-40 lg:pt-44">
+    <div className="bg-void px-5 pb-28 pt-32 text-paper lg:px-[5vw] lg:pb-40 lg:pt-44">
       <CheckoutView />
     </div>
   );

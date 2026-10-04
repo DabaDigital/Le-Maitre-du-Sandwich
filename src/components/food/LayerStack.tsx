@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { Layer } from "@/lib/assets";
 import { cn } from "@/lib/cn";
-import { contentExtent, phaseOffsets } from "@/lib/explode";
+import { contentExtent, phaseOffsets, type Phase } from "@/lib/explode";
 
 type LayerStackProps = {
   layers: Layer[];
@@ -14,23 +14,37 @@ type LayerStackProps = {
   /** Hidden until the timeline swaps it in for the main photo. */
   hidden?: boolean;
   captions?: boolean;
+  /** How the stack renders before any timeline moves it. */
+  phase?: Phase;
   preload?: boolean;
+  sizes?: string;
+  className?: string;
 };
 
 /**
  * One sandwich made of transparent layers on a shared canvas. Every layer wrapper covers the
  * whole canvas and the PNG inside keeps its native size from the canvas origin, so the files
  * line up exactly as authored. Opening the sandwich only translates the wrappers vertically;
- * the stack renders closed (see phaseOffsets) until the scroll timeline takes over.
+ * the stack renders in `phase` (see phaseOffsets) until a scroll timeline takes over.
  */
-export function LayerStack({ layers, canvas, placement, hidden = false, captions = true, preload }: LayerStackProps) {
+export function LayerStack({
+  layers,
+  canvas,
+  placement,
+  hidden = false,
+  captions = true,
+  phase = "closed",
+  preload,
+  sizes = "(min-width: 1024px) 70vw, 130vw",
+  className,
+}: LayerStackProps) {
   const extent = contentExtent(layers, canvas);
-  const closed = phaseOffsets(layers, canvas, "closed");
+  const offsets = phaseOffsets(layers, canvas, phase);
 
   return (
     <div
       data-stack
-      className={cn("absolute", !placement && "inset-0", hidden && "invisible opacity-0")}
+      className={cn("absolute", !placement && "inset-0", hidden && "invisible opacity-0", className)}
       style={
         placement
           ? { left: `${placement.left}%`, top: `${placement.top}%`, width: `${placement.width}%`, aspectRatio: `${canvas.w} / ${canvas.h}` }
@@ -42,7 +56,7 @@ export function LayerStack({ layers, canvas, placement, hidden = false, captions
           key={layer.file}
           data-layer
           className="absolute inset-0 will-change-transform"
-          style={{ zIndex: layers.length - i, transform: `translateY(${closed[i]}%)` }}
+          style={{ zIndex: layers.length - i, transform: `translateY(${offsets[i]}%)` }}
         >
           <div data-float className="size-full">
             <Image
@@ -52,7 +66,7 @@ export function LayerStack({ layers, canvas, placement, hidden = false, captions
               alt=""
               quality={90}
               preload={preload}
-              sizes="(min-width: 1024px) 70vw, 130vw"
+              sizes={sizes}
               draggable={false}
               className="pointer-events-none absolute left-0 top-0 max-w-none select-none"
               style={{ width: `${(layer.asset.w / canvas.w) * 100}%`, height: `${(layer.asset.h / canvas.h) * 100}%` }}
@@ -72,7 +86,7 @@ export function LayerStack({ layers, canvas, placement, hidden = false, captions
               data-caption-track
               aria-hidden
               className="pointer-events-none absolute inset-0 z-[60]"
-              style={{ transform: `translateY(${closed[i]}%)` }}
+              style={{ transform: `translateY(${offsets[i]}%)` }}
             >
               <div
                 data-caption

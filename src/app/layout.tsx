@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Montserrat } from "next/font/google";
+import { Anton, Montserrat, Mr_Dafoe } from "next/font/google";
 import "lenis/dist/lenis.css";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { ProductPanel } from "@/components/product/ProductPanel";
-import { Finale } from "@/components/site/Finale";
+import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 import { MobileCartBar } from "@/components/site/MobileCartBar";
 import { Toast } from "@/components/ui/Toast";
@@ -13,6 +13,18 @@ import "./globals.css";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
+  subsets: ["latin"],
+});
+
+const anton = Anton({
+  variable: "--font-anton",
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const mrDafoe = Mr_Dafoe({
+  variable: "--font-mr-dafoe",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -33,7 +45,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#050505",
+  themeColor: "#080707",
 };
 
 const jsonLd = {
@@ -57,7 +69,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className={`${montserrat.variable} antialiased`}>
+    <html lang="fr" className={`${montserrat.variable} ${anton.variable} ${mrDafoe.variable} antialiased`}>
       <body className="font-sans">
         <a
           href="#contenu"
@@ -68,7 +80,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SmoothScroll />
         <Header />
         <main id="contenu">{children}</main>
-        <Finale />
+        <Footer />
         <MobileCartBar />
         <ProductPanel />
         <Toast />

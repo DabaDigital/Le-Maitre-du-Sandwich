@@ -92,7 +92,7 @@ export function CheckoutForm({ lines, count, subtotal, onConfirmed }: CheckoutFo
 
   return (
     <form noValidate onSubmit={submit} aria-labelledby="delivery-title">
-      <h2 id="delivery-title" className="eyebrow text-steel">
+      <h2 id="delivery-title" className="kicker">
         Livraison
       </h2>
 
@@ -121,12 +121,12 @@ export function CheckoutForm({ lines, count, subtotal, onConfirmed }: CheckoutFo
       </div>
 
       <fieldset className="mt-14">
-        <legend className="eyebrow text-steel">Paiement</legend>
-        <div className="mt-5 border-t border-ink/10">
+        <legend className="kicker">Paiement</legend>
+        <div className="mt-5 border-t border-paper/10">
           {paymentOptions.map(({ id, icon: Icon, hint }) => (
             <label
               key={id}
-              className="flex cursor-pointer items-center gap-5 border-b border-ink/10 py-5 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-ink"
+              className="flex cursor-pointer items-center gap-5 border-b border-paper/10 py-5 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-4 has-[:focus-visible]:outline-paper"
             >
               <input
                 type="radio"
@@ -134,12 +134,12 @@ export function CheckoutForm({ lines, count, subtotal, onConfirmed }: CheckoutFo
                 value={id}
                 checked={payment === id}
                 onChange={() => setPayment(id)}
-                className="size-4 accent-ink"
+                className="size-4 accent-flame"
               />
               <Icon className="size-5 shrink-0" />
               <span className="min-w-0">
-                <span className="block text-lg font-black uppercase tracking-tight">{paymentLabels[id]}</span>
-                <span className="block text-xs text-steel">{hint}</span>
+                <span className="display block text-2xl">{paymentLabels[id]}</span>
+                <span className="block text-xs text-paper/55">{hint}</span>
               </span>
             </label>
           ))}
@@ -147,28 +147,28 @@ export function CheckoutForm({ lines, count, subtotal, onConfirmed }: CheckoutFo
       </fieldset>
 
       <div className="mt-10 hidden lg:block">
-        <Button type="submit" variant="dark" size="lg" className="w-full">
+        <Button type="submit" variant="flame" size="lg" className="w-full">
           {submitLabel} · <span className="tabular-nums">{formatPrice(total)}</span>
           <ArrowRight className="size-4" />
         </Button>
-        <p className="mt-4 flex items-center justify-center gap-2 text-xs text-steel">
+        <p className="mt-4 flex items-center justify-center gap-2 text-xs text-paper/55">
           <MessageCircle className="size-3.5" />
           Votre commande s&apos;ouvre dans WhatsApp : appuyez sur Envoyer.
         </p>
       </div>
 
       {/* Phones: total and submit always within reach. */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-paper/95 px-5 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 text-ink backdrop-blur lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-paper/10 bg-void/95 px-5 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 text-paper backdrop-blur lg:hidden">
         <div className="flex items-center gap-4">
           <div>
-            <p className="eyebrow text-steel">Total · {count}</p>
-            <p className="text-xl font-black tabular-nums">{formatPrice(total)}</p>
+            <p className="eyebrow text-paper/55">Total · {count}</p>
+            <p className="display text-2xl tabular-nums">{formatPrice(total)}</p>
           </div>
-          <Button type="submit" variant="dark" size="lg" className="flex-1">
+          <Button type="submit" variant="flame" size="lg" className="flex-1">
             {submitLabel}
           </Button>
         </div>
-        <p className="mt-1.5 flex items-center justify-center gap-1.5 text-[11px] text-steel">
+        <p className="mt-1.5 flex items-center justify-center gap-1.5 text-[11px] text-paper/55">
           <MessageCircle className="size-3" />
           Envoi de la commande via WhatsApp
         </p>

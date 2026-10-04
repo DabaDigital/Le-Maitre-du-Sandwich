@@ -43,7 +43,7 @@ export function ProductPanel() {
         type="button"
         autoFocus
         onClick={closeProduct}
-        className="eyebrow fixed right-5 top-5 z-10 inline-flex items-center gap-2 rounded-full bg-paper px-5 py-3 text-ink hover:bg-mist lg:right-8 lg:top-7"
+        className="eyebrow fixed right-5 top-5 z-10 inline-flex items-center gap-2 rounded-btn bg-paper px-5 py-3 text-ink hover:bg-mist lg:right-8 lg:top-7"
       >
         Fermer
         <X className="size-4" />

@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { AssetImage } from "@/components/food/FoodPhoto";
 import { ButtonLink } from "@/components/ui/Button";
+import { PriceTag } from "@/components/ui/PriceTag";
 import { useCart } from "@/lib/cart";
 import { productPhoto } from "@/lib/assets";
-import { formatPrice } from "@/lib/format";
 import { bestSellers } from "@/lib/menu";
 import { openProduct } from "@/lib/panel";
 import { useHydrated } from "@/lib/persistent-store";
@@ -26,15 +26,16 @@ export function CheckoutView() {
   if (!count) {
     return (
       <div className="py-10">
-        <h1 className="display text-[15vw] lg:text-[9vw]">
+        <p className="kicker">Votre commande</p>
+        <h1 className="display mt-3 text-[18vw] lg:text-[9vw]">
           Panier
           <br />
           vide.
         </h1>
-        <p className="mt-8 max-w-md text-lg leading-relaxed text-steel">
+        <p className="mt-8 max-w-md text-lg leading-relaxed text-paper/60">
           Le Maître vous attend : baguettes chaudes, burgers XXL et frites maison.
         </p>
-        <ButtonLink href="/menu" variant="dark" size="lg" className="mt-10">
+        <ButtonLink href="/menu" variant="light" size="lg" arrow className="mt-10">
           Découvrir la carte
         </ButtonLink>
 
@@ -45,14 +46,14 @@ export function CheckoutView() {
             <li key={product.slug}>
               <button type="button" onClick={() => openProduct(product.slug)} className="group w-full text-left">
                 {photo && (
-                  <span className="block aspect-[4/3] overflow-hidden rounded-btn">
+                  <span className="block aspect-[4/3] overflow-hidden rounded-card border border-paper/10">
                     <span className="block size-full transition-transform duration-700 ease-cine group-hover:scale-105">
                       <AssetImage asset={photo} alt="" sizes="(min-width: 1024px) 22vw, 45vw" fit="cover" feather={false} />
                     </span>
                   </span>
                 )}
-                <span className="mt-5 block text-lg font-black uppercase leading-none tracking-tight">{product.name}</span>
-                <span className="mt-2 block text-sm tabular-nums text-steel">{formatPrice(product.price)}</span>
+                <span className="display mt-5 block text-2xl">{product.name}</span>
+                <PriceTag price={product.price} className="mt-2" />
               </button>
             </li>
             );
@@ -64,7 +65,8 @@ export function CheckoutView() {
 
   return (
     <div className="pb-28 lg:pb-0">
-      <h1 className="display text-[15vw] lg:text-[9vw]">
+      <p className="kicker">Panier</p>
+      <h1 className="display mt-3 text-[18vw] lg:text-[9vw]">
         Votre
         <br />
         commande

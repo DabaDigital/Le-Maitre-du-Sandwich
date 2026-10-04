@@ -10,8 +10,6 @@ type QuantityStepperProps = {
   min?: number;
   max?: number;
   size?: "sm" | "md";
-  /** "light" on black scenes, "dark" on white pages. */
-  tone?: "light" | "dark";
   className?: string;
 };
 
@@ -22,12 +20,10 @@ export function QuantityStepper({
   min = 1,
   max = MAX_QTY,
   size = "md",
-  tone = "dark",
   className,
 }: QuantityStepperProps) {
   const button = cn(
-    "grid place-items-center rounded-full transition-colors disabled:pointer-events-none disabled:opacity-25",
-    tone === "light" ? "hover:bg-paper/10" : "hover:bg-ink/5",
+    "grid place-items-center rounded-full transition-colors hover:bg-paper/10 disabled:pointer-events-none disabled:opacity-25",
     size === "sm" ? "size-8" : "size-11",
   );
   const icon = size === "sm" ? "size-3.5" : "size-4";
@@ -36,11 +32,7 @@ export function QuantityStepper({
     <div
       role="group"
       aria-label={`Quantité : ${label}`}
-      className={cn(
-        "inline-flex items-center rounded-full border",
-        tone === "light" ? "border-paper/25" : "border-ink/20",
-        className,
-      )}
+      className={cn("inline-flex items-center rounded-full border border-paper/25", className)}
     >
       <button
         type="button"

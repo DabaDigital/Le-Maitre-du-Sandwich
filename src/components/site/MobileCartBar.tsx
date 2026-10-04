@@ -15,12 +15,12 @@ export function MobileCartBar() {
     <div className="fixed inset-x-0 bottom-0 z-40 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden">
       <Link
         href="/panier"
-        className="flex h-14 items-center justify-between rounded-full bg-paper px-6 text-ink shadow-[0_16px_40px_rgb(0_0_0/0.45)]"
+        className="flex h-14 items-center justify-between rounded-card bg-flame px-6 text-paper shadow-[0_16px_40px_rgb(0_0_0/0.45)]"
       >
         <span className="eyebrow">
           Panier <span className="tabular-nums">({count})</span>
         </span>
-        <span className="text-base font-black tabular-nums">{formatPrice(subtotal)}</span>
+        <span className="font-display text-xl tabular-nums">{formatPrice(subtotal)}</span>
       </Link>
     </div>
   );

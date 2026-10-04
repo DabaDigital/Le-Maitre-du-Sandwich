@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
 import { categories, type CategoryId } from "@/lib/menu";
 
-/** Floating category index; blends like the header so it reads on black and white sections. */
+/** Category tabs that stick under the header; the red bar follows the section in view. */
 export function MenuNav() {
   const [active, setActive] = useState<CategoryId>(categories[0].id);
 
@@ -28,9 +28,9 @@ export function MenuNav() {
   return (
     <nav
       aria-label="Catégories du menu"
-      className="pointer-events-none sticky top-16 z-40 text-paper mix-blend-difference lg:top-20"
+      className="sticky top-16 z-40 border-y border-paper/10 bg-void/90 text-paper backdrop-blur-md lg:top-20"
     >
-      <ul className="no-scrollbar pointer-events-auto flex gap-6 overflow-x-auto px-5 py-3 lg:px-[5vw]">
+      <ul className="no-scrollbar flex gap-7 overflow-x-auto px-5 lg:gap-10 lg:px-[5vw]">
         {categories.map((category) => (
           <li key={category.id} className="shrink-0">
             <a
@@ -38,8 +38,9 @@ export function MenuNav() {
               aria-current={active === category.id ? "true" : undefined}
               onClick={() => setActive(category.id)}
               className={cn(
-                "eyebrow transition-opacity",
-                active === category.id ? "opacity-100 underline underline-offset-8" : "opacity-50 hover:opacity-100",
+                "relative block py-4 text-[11px] font-bold uppercase tracking-[0.16em] transition-colors",
+                "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:bg-flame after:transition-transform after:duration-500 after:ease-cine",
+                active === category.id ? "text-paper after:scale-x-100" : "text-paper/55 after:scale-x-0 hover:text-paper",
               )}
             >
               {category.name}

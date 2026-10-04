@@ -9,7 +9,7 @@ import { directionsUrl, stores } from "@/lib/stores";
 
 const ZOOM = 2.6;
 // Where the view rests (fraction of map height) when no restaurant is focused.
-const REST_Y = 0.46;
+const REST_Y = 0.5;
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
 type CasablancaMapProps = {
@@ -19,13 +19,13 @@ type CasablancaMapProps = {
 };
 
 /**
- * Stylized monochrome Casablanca drawn from OpenStreetMap data. Focusing a restaurant zooms
+ * Stylized dark Casablanca drawn from OpenStreetMap data, with the restaurants as red pins. Focusing a restaurant zooms
  * the whole map toward it; pins counter-scale so they keep their size.
  */
 export function CasablancaMap({ active, onActive, className }: CasablancaMapProps) {
   const desktop = useDesktop();
-  // The map layer fills the frame's width; on desktop the frame is 16:9, so the map overflows vertically.
-  const frameAspect = desktop ? 16 / 9 : MAP_WIDTH / MAP_HEIGHT;
+  // The map layer fills the frame's width; on desktop the frame is a wide strip, so the map overflows vertically.
+  const frameAspect = desktop ? 21 / 9 : MAP_WIDTH / MAP_HEIGHT;
   const overflowY = (MAP_HEIGHT / MAP_WIDTH) * frameAspect;
 
   const store = stores.find((s) => s.id === active) ?? null;
@@ -36,7 +36,7 @@ export function CasablancaMap({ active, onActive, className }: CasablancaMapProp
 
   return (
     <div
-      className={cn("relative isolate overflow-hidden bg-[#0c0c0c]", className)}
+      className={cn("relative isolate overflow-hidden rounded-card border border-paper/10 bg-[#0c0c0c]", className)}
       style={{ aspectRatio: frameAspect }}
       onMouseLeave={() => onActive(null)}
     >
@@ -89,12 +89,12 @@ export function CasablancaMap({ active, onActive, className }: CasablancaMapProp
               >
                 <span className="relative grid size-4 place-items-center">
                   <span
-                    className="pin-ring absolute inset-0 rounded-full border border-paper"
+                    className="pin-ring absolute inset-0 rounded-full border border-flame"
                     style={{ animationDelay: `${index * 0.6}s` }}
                   />
                   <span
                     className={cn(
-                      "size-3 rounded-full bg-paper shadow-[0_0_24px_rgb(255_255_255/0.8)] transition-[scale] duration-500",
+                      "size-3 rounded-full bg-flame shadow-[0_0_20px_4px_rgb(228_45_31/0.75)] transition-[scale] duration-500",
                       on && "scale-150",
                     )}
                   />
@@ -117,13 +117,13 @@ export function CasablancaMap({ active, onActive, className }: CasablancaMapProp
       <div
         aria-live="polite"
         className={cn(
-          "absolute bottom-4 left-4 right-4 z-20 max-w-sm bg-void/90 p-5 text-paper backdrop-blur transition-[opacity,translate] duration-700 ease-cine sm:right-auto lg:bottom-8 lg:left-8",
+          "absolute bottom-4 left-4 right-4 z-20 max-w-sm rounded-card border-l-2 border-flame bg-void/90 p-5 text-paper backdrop-blur transition-[opacity,translate] duration-700 ease-cine sm:right-auto lg:bottom-8 lg:left-8",
           store ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0",
         )}
       >
         {store && (
           <>
-            <p className="eyebrow text-paper/50">Le Maître · {store.name}</p>
+            <p className="kicker">Le Maître · {store.name}</p>
             <p className="mt-2 text-lg font-bold leading-snug">{store.address}</p>
             <p className="mt-1 text-sm text-paper/60">{store.hours}</p>
             <div className="mt-4 flex gap-5">

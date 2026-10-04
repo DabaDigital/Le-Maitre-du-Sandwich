@@ -28,8 +28,8 @@ export const socials = [
 
 export const nav = [
   { href: "/", label: "Accueil" },
-  { href: "/menu", label: "Menu" },
+  { href: "/menu", label: "La carte" },
   { href: "/ambiances", label: "Nos Ambiances" },
-  { href: "/localisations", label: "Localisations" },
+  { href: "/localisations", label: "Nos adresses" },
   { href: "/contact", label: "Contact" },
 ];

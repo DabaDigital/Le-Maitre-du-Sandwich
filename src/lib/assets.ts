@@ -11,18 +11,19 @@ import type { CategoryId } from "./menu";
 export const ASSET_FILES = {
   entrecote: {
     main: "entrecote-main.webp",
-    // Visual reference only: never displayed in place of the layers.
-    reference: "entrecote-exploded.webp",
-    // Final layer set (cut from the exploded reference). The older files with the same names
-    // directly in entrecote/ are not used.
-    layers: [
-      { file: "entrecote/layers/entrecote-bread-top.png", label: "Pain croustillant", note: "Baguette chaude, croûte dorée" },
-      { file: "entrecote/layers/entrecote-sauce.png", label: "Sauce maison", note: "Notre recette signature" },
-      { file: "entrecote/layers/entrecote-onions.png", label: "Oignons caramélisés", note: "Dorés lentement" },
-      { file: "entrecote/layers/entrecote-tomato.png", label: "Tomate mûre", note: "Tranchée à la commande" },
-      { file: "entrecote/layers/entrecote-lettuce.png", label: "Salade croquante", note: "Feuilles fraîches du jour" },
-      { file: "entrecote/layers/entrecote-steak.png", label: "Entrecôte grillée", note: "Saisie minute" },
-      { file: "entrecote/layers/entrecote-bread-bottom.png", label: "Mie moelleuse", note: "Cuite chaque matin" },
+    // The sandwich opened up, as one transparent cutout (no separate layers for now).
+    exploded: "entrecote-exploded.webp",
+    // Label rows for the exploded image, top → bottom, measured on that file: y is each ingredient's
+    // vertical centre and x its right edge at that height, both in % of the image. Re-measure if the
+    // image is replaced.
+    ingredients: [
+      { label: "Pain croustillant", note: "Baguette chaude, croûte dorée", y: 11.5, x: 80 },
+      { label: "Sauce maison", note: "Notre recette signature", y: 23.5, x: 80 },
+      { label: "Oignons caramélisés", note: "Dorés lentement", y: 39, x: 79 },
+      { label: "Tomate mûre", note: "Tranchée à la commande", y: 50, x: 78 },
+      { label: "Salade croquante", note: "Feuilles fraîches du jour", y: 60, x: 84 },
+      { label: "Entrecôte grillée", note: "Saisie minute", y: 72, x: 83.5 },
+      { label: "Mie moelleuse", note: "Cuite chaque matin", y: 86, x: 83 },
     ],
   },
   classicXXL: {
@@ -43,6 +44,14 @@ export const ASSET_FILES = {
   },
   mitraillette: {
     main: "mitraillette-main.webp",
+  },
+  // Close-up photos for the "Les signatures" cards, by menu slug (the hero uses entrecote.main).
+  // A product whose file is missing falls back to its main photo.
+  signatures: {
+    entrecote: "signature-entrecote.webp",
+    mitraillette: "signature-mitraillette.webp",
+    "classic-xxl": "signature-classic-xxl.webp",
+    "spicy-xxl": "signature-spicy-xxl.webp",
   },
   brand: {
     crown: "crown.webp",
@@ -110,7 +119,11 @@ function layered(config: { main: string; layers: readonly { file: string; label:
   return { main: resolveAsset(config.main), layers: aligned ? layers : null, canvas: aligned ? canvas : null };
 }
 
-export const entrecote = layered(ASSET_FILES.entrecote);
+export const entrecote = {
+  main: resolveAsset(ASSET_FILES.entrecote.main),
+  exploded: resolveAsset(ASSET_FILES.entrecote.exploded),
+  ingredients: ASSET_FILES.entrecote.ingredients,
+};
 export const classicXXL = layered(ASSET_FILES.classicXXL);
 
 export const brand = {
@@ -129,6 +142,15 @@ const productPhotos: Record<string, Asset | null> = {
 
 export function productPhoto(slug: string): Asset | null {
   return productPhotos[slug] ?? null;
+}
+
+const signaturePhotos: Record<string, Asset | null> = Object.fromEntries(
+  Object.entries(ASSET_FILES.signatures).map(([slug, file]) => [slug, resolveAsset(file)]),
+);
+
+/** The photo on a product's "Les signatures" card: its close-up if supplied, else its main photo. */
+export function signaturePhoto(slug: string): Asset | null {
+  return signaturePhotos[slug] ?? productPhoto(slug);
 }
 
 /** Menu index: the image that represents each category. Categories without one are shown as type only. */

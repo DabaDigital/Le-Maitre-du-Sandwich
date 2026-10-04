@@ -21,7 +21,7 @@ export function Toast() {
             <Link
               href={toast.href}
               onClick={dismissToast}
-              className="rounded-full bg-ink px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-paper hover:bg-[#2b2b2b]"
+              className="rounded-full bg-flame px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.2em] text-paper hover:bg-ember"
             >
               {toast.action}
             </Link>

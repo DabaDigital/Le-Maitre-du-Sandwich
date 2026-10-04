@@ -2,109 +2,44 @@
   "files": {
     "entrecote/entrecote-exploded.webp": {
       "src": "/images/entrecote/entrecote-exploded.webp",
-      "w": 1672,
-      "h": 940,
-      "alpha": false,
+      "w": 1374,
+      "h": 1145,
+      "alpha": true,
       "format": "png",
-      "box": null
+      "box": [
+        167,
+        3,
+        1066,
+        1136
+      ]
     },
     "entrecote/entrecote-main.webp": {
       "src": "/images/entrecote/entrecote-main.webp",
+      "w": 2048,
+      "h": 768,
+      "alpha": false,
+      "format": "png",
+      "box": null
+    },
+    "signature-entrecote.webp": {
+      "src": "/images/signature-entrecote.webp",
       "w": 1672,
       "h": 941,
       "alpha": false,
       "format": "png",
       "box": null
     },
-    "entrecote/layers/entrecote-bread-bottom.png": {
-      "src": "/images/entrecote/layers/entrecote-bread-bottom.png",
+    "signature-mitraillette.webp": {
+      "src": "/images/signature-mitraillette.webp",
       "w": 1672,
       "h": 941,
       "alpha": true,
       "format": "png",
       "box": [
-        236,
-        742,
-        1195,
-        165
-      ]
-    },
-    "entrecote/layers/entrecote-bread-top.png": {
-      "src": "/images/entrecote/layers/entrecote-bread-top.png",
-      "w": 1672,
-      "h": 941,
-      "alpha": true,
-      "format": "png",
-      "box": [
-        235,
-        30,
-        1196,
-        188
-      ]
-    },
-    "entrecote/layers/entrecote-lettuce.png": {
-      "src": "/images/entrecote/layers/entrecote-lettuce.png",
-      "w": 1672,
-      "h": 941,
-      "alpha": true,
-      "format": "png",
-      "box": [
-        226,
-        492,
-        1206,
-        154
-      ]
-    },
-    "entrecote/layers/entrecote-onions.png": {
-      "src": "/images/entrecote/layers/entrecote-onions.png",
-      "w": 1672,
-      "h": 941,
-      "alpha": true,
-      "format": "png",
-      "box": [
-        241,
-        300,
-        1177,
-        122
-      ]
-    },
-    "entrecote/layers/entrecote-sauce.png": {
-      "src": "/images/entrecote/layers/entrecote-sauce.png",
-      "w": 1672,
-      "h": 941,
-      "alpha": true,
-      "format": "png",
-      "box": [
-        254,
-        194,
-        1135,
-        116
-      ]
-    },
-    "entrecote/layers/entrecote-steak.png": {
-      "src": "/images/entrecote/layers/entrecote-steak.png",
-      "w": 1672,
-      "h": 941,
-      "alpha": true,
-      "format": "png",
-      "box": [
-        235,
-        610,
-        1195,
-        168
-      ]
-    },
-    "entrecote/layers/entrecote-tomato.png": {
-      "src": "/images/entrecote/layers/entrecote-tomato.png",
-      "w": 1672,
-      "h": 941,
-      "alpha": true,
-      "format": "png",
-      "box": [
-        251,
-        408,
-        1166,
-        114
+        13,
+        18,
+        1659,
+        904
       ]
     }
   }

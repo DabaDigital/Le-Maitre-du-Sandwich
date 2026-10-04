@@ -1,26 +1,39 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-ink: #111111;
-  --color-void: #050505;
-  --color-paper: #ffffff;
-  --color-mist: #e9e9e9;
+  --color-ink: #120f0d;
+  --color-void: #080707;
+  /* Raised surfaces (cards, panels) on the black scene. */
+  --color-coal: #121110;
+  --color-char: #1b1918;
+  /* Warm cream: headlines, body copy and primary buttons. */
+  --color-paper: #f3ebdf;
+  --color-mist: #e2d6c4;
   --color-steel: #6b6b6b;
+  /* The brand red: kickers, prices, pins and the order banner. */
+  --color-flame: #e42d1f;
+  --color-ember: #b8170f;
+  /* Warm gold for small badges and the crown on phones. */
+  --color-gold: #e3a14a;
 
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-script: var(--font-mr-dafoe), cursive;
 
-  --radius-btn: 8px;
+  --radius-btn: 3px;
+  --radius-card: 6px;
 
   --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
 
   --animate-toast-in: toast-in 320ms var(--ease-cine);
 }
 
-/* Editorial display type: heavy, tight, uppercase. */
+/* Display type: condensed, heavy, uppercase. */
 @utility display {
-  font-weight: 900;
-  line-height: 0.84;
-  letter-spacing: -0.045em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: 0.005em;
   text-transform: uppercase;
 }
 
@@ -31,6 +44,15 @@
   text-transform: uppercase;
 }
 
+/* Section label in brand red, above every display title. */
+@utility kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-flame);
+}
+
 @utility no-scrollbar {
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -39,7 +61,7 @@
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 html {
@@ -52,9 +74,20 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Film grain over the whole site: the black reads as a surface, not a void. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
 ::selection {
-  background: var(--color-paper);
-  color: var(--color-ink);
+  background: var(--color-flame);
+  color: var(--color-paper);
 }
 
 :focus-visible {
@@ -77,22 +110,74 @@ body {
   }
 }
 
-@keyframes drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) rotate(var(--r, 12deg));
-  }
-  50% {
-    transform: translate3d(0, -10%, 0) rotate(calc(var(--r, 12deg) - 8deg));
-  }
-}
-
 @keyframes spin-slow {
   from {
     transform: rotateY(-28deg) rotateZ(-4deg);
   }
   to {
     transform: rotateY(28deg) rotateZ(4deg);
+  }
+}
+
+/* Slow vertical bob for food floating in the scene. */
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2.2%) rotate(-0.8deg);
+  }
+}
+
+@keyframes smoke {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(-6%, -10%, 0) scale(1.18);
+    opacity: 0.5;
+  }
+}
+
+/* Hero entrance: copy rises in, staggered with --delay. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+/* Hero photo: fades in while the camera settles; scaling from the right edge never exposes it. */
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes breathe {
+  to {
+    transform: scale(1.035);
+  }
+}
+
+/* The dot inside the scroll cue's mouse. */
+@keyframes wheel {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(9px);
+    opacity: 0;
   }
 }
 
@@ -104,25 +189,6 @@ body {
   100% {
     transform: scale(2.6);
     opacity: 0;
-  }
-}
-
-@keyframes scroll-cue {
-  0% {
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-  45% {
-    transform: scaleY(1);
-    transform-origin: top;
-  }
-  55% {
-    transform: scaleY(1);
-    transform-origin: bottom;
-  }
-  100% {
-    transform: scaleY(0);
-    transform-origin: bottom;
   }
 }
 
@@ -147,8 +213,34 @@ body {
   transform-style: preserve-3d;
 }
 
-.drift {
-  animation: drift 7s ease-in-out infinite;
+.bob {
+  animation: bob 7s ease-in-out infinite;
+}
+
+.rise {
+  animation: rise 1s var(--ease-cine) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.hero-enter {
+  animation: hero-enter 1.8s var(--ease-cine) both;
+  animation-delay: var(--delay, 0ms);
+  transform-origin: 100% 55%;
+}
+
+.breathe {
+  animation: breathe 14s ease-in-out infinite alternate;
+  transform-origin: 100% 55%;
+}
+
+/* Soft drifting haze, lit from the side. */
+.smoke {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 244 230 / 0.09), rgb(255 244 230 / 0.03) 55%, transparent);
+  filter: blur(30px);
+  animation: smoke 16s ease-in-out infinite alternate;
+  pointer-events: none;
 }
 
 /* Soft contact shadow under floating food. --shadow controls depth (hover deepens it). */
@@ -194,10 +286,47 @@ body {
   mask-composite: intersect;
 }
 
+/*
+ * Hero banner photo: black on the left (under the copy), lit orange on the right, running off the
+ * right edge of the screen; its black areas are handled by mix-blend-lighten. The top fades so the
+ * orange rises into the hero's glow behind the nav, and the table dissolves at the bottom. Eased
+ * stops, so no start line shows.
+ */
+.hero-feather {
+  --fade: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(0 0 0 / 0.08) 6%,
+    rgb(0 0 0 / 0.3) 12%,
+    rgb(0 0 0 / 0.6) 18%,
+    rgb(0 0 0 / 0.88) 24%,
+    #000 30%,
+    #000 82%,
+    rgb(0 0 0 / 0.88) 86%,
+    rgb(0 0 0 / 0.6) 90%,
+    rgb(0 0 0 / 0.3) 94%,
+    rgb(0 0 0 / 0.08) 97%,
+    transparent
+  );
+  -webkit-mask-image: var(--fade);
+  mask-image: var(--fade);
+}
+
 /* ---------- Casablanca map pins ---------- */
 
 .pin-ring {
   animation: pin-pulse 2.4s var(--ease-cine) infinite;
+}
+
+/* ---------- Order banner ---------- */
+
+/* Red surface with darker scorched patches, like a printed menu board. */
+.flame-surface {
+  background:
+    radial-gradient(60% 90% at 12% 110%, rgb(80 4 0 / 0.55), transparent 70%),
+    radial-gradient(45% 80% at 95% -10%, rgb(90 6 0 / 0.5), transparent 70%),
+    radial-gradient(40% 60% at 55% 50%, rgb(255 90 50 / 0.25), transparent 75%),
+    var(--color-flame);
 }
 
 @media (prefers-reduced-motion: reduce) {
